@@ -566,23 +566,6 @@ string resolution(query q)
 	int number = kbase.size();
 	int kbs = kbsize - 1;
 	unsigned int noSolution = 0;
-
-
-	for(unsigned int i = 0; i < kbase.size(); i++)
-	{
-		cout << "======= " << i << " =======" << endl;
-		for(unsigned int j = 0; j < kbase[i].predSize(); j++)
-		{
-			cout << kbase[i].pred(j) << ": ";
-			for(unsigned int w = 0; w < kbase[i].argSize(j); w++)
-			{
-				cout << kbase[i].arg(j, w) << " ";
-			}
-			cout << endl;
-		}
-		cout << endl;
-	}
-
 	int count = 0;
 
 	while(!finished)
@@ -621,26 +604,14 @@ string resolution(query q)
 							if(u.predEmpty())
 							{
 								finished = true;
-								cout <<"**************************** TRUE ****************************" << endl;
-								cout << "CONTRADITION: " << pointer << " & " << i << endl;
 								return "TRUE";
 							}
 							else if(u.pred(0) != "INVALID" && !inKB(kbase, u))
 							{
 								kbase.push_back(u);
 								found = true;
-								cout << "======== " << number << " ======= " << "FROM: i=" << i <<  " & p=" << pointer << " ======= " << endl;
 								count++;
 								number++;
-								for(unsigned int m = 0; m < u.predSize(); m++)
-								{
-									cout << u.pred(m) << ": ";
-									for(unsigned int n = 0; n < u.argSize(m); n++)
-									{
-										cout << u.arg(m, n) << " ";
-									}
-									cout << endl;
-								}
 								goto NEXT;
 							}
 						}
@@ -675,7 +646,6 @@ string resolution(query q)
 		}
 	}
 
-	cout << "**************************** FALSE ****************************" << endl;
 	return "FALSE";
 }
 
@@ -693,22 +663,6 @@ void completeResolution()
 int main() {
 
 	getInput();
-
-
-	//Print Queries
-	cout << "QUERIES: " << endl;
-	for(unsigned int i = 0; i < queries.size(); i++)
-	{
-		cout << queries[i].pred() << ": ";
-		for(unsigned int j = 0; j < queries[i].argSize(); j++)
-		{
-			cout << queries[i].arg(j) << " ";
-		}
-		cout << endl;
-	}
-
-	cout << endl;
-
 	completeResolution();
 
 	return 0;
